@@ -3,6 +3,7 @@
 use App\Http\Controllers\FormDangNhap;
 use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FormLogin;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +45,10 @@ Route::get('/duongdi/{loidi}',function($loidi){
     return ;
 })->middleware('Test1Middleware');
 
-Route::match(['get','post'],"Dangnhap",[FormDangNhap::class,'HienthiFormLogin'])->name('hienthi');
+Route::match(['get','post'],"Dangnhap",[FormDangNhap::class,'HienthiFormLogin'])->name('hienthi')
+    ->middleware('checklogin');
+
+Route::get('/Login',[FormLogin::class,'Login']);
+Route::post('/Login',[FormLogin::class,'Status'])->name('status');
+
+Route::get('/hienthiuser',[FormLogin::class,'hienthi']);
