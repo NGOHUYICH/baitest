@@ -34,26 +34,35 @@ return [
     */
 
     'mailers' => [
-        // 'smtp' => [
-        //     'transport' => 'smtp',
-        //     'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-        //     'port' => env('MAIL_PORT', 587),
-        //     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-        //     'username' => env('MAIL_USERNAME'),
-        //     'password' => env('MAIL_PASSWORD'),
-        //     'timeout' => null,
-        //     'auth_mode' => null,
-        // ],
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('ngoich08@gmail.com'),
-            'password' => env('ngoich0810'),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'auth_mode' => null,
         ],
+
+        // 'smtp' => [
+        //     'transport' => 'smtp',
+        //     'host' => env('MAIL_HOST', 'smtp.googlemail.com'),
+        //     'port' => env('MAIL_PORT', 587),
+        //     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+        //     'username' => env('ngoich08@gmail.com'),
+        //     'password' => env('ngoich0810'),
+        //     'timeout' => null,
+        //     'auth_mode' => null,
+        // ],
+        // 'gmail' => [
+        //     'transport' => 'smtp',
+        //     'host' => 'smtp.gmail.com',
+        //     'port' => 465,
+        //     'encryption' => 'ssl',
+        //     'username' => 'ngoich08@gmail.com',
+        //     'password' => 'ngoich0810',
+        // ],
 
         'ses' => [
             'transport' => 'ses',
@@ -97,10 +106,11 @@ return [
     //     'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
     //     'name' => env('MAIL_FROM_NAME', 'Example'),
     // ],
-    'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'ngoich08@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'ngo huy ich'),
-    ],
+
+    // 'from' => [
+    //     'address' => env('MAIL_FROM_ADDRESS', 'ngoich08@gmail.com'),
+    //     'name' => env('MAIL_FROM_NAME', 'ich ngo huy'),
+    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -119,13 +129,6 @@ return [
     //         'verify_peer_name'  => false,
     //     ],
     // ],
-    'stream' => [
-        'tls' => [
-            'allow_self_signed' => true,
-            'verify_peer'       => false,
-            'verify_peer_name'  => false,
-        ],
-    ],
 
     'markdown' => [
         'theme' => 'default',

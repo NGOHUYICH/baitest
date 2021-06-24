@@ -48,7 +48,15 @@ Route::get('/duongdi/{loidi}',function($loidi){
 Route::match(['get','post'],"Dangnhap",[FormDangNhap::class,'HienthiFormLogin'])->name('hienthi')
     ->middleware('checklogin');
 
-Route::get('/Login',[FormLogin::class,'Login']);
-Route::post('/Login',[FormLogin::class,'Status'])->name('status');
+// Route::get('/Login',[FormLogin::class,'Login']);
+// Route::post('/Login',[FormLogin::class,'Status'])->name('status');
 
 Route::get('/hienthiuser',[FormLogin::class,'GuiMail']);
+
+Route::prefix('Login')->group(function(){
+    Route::get('/',[FormLogin::class,'Login']);
+    Route::post('/',[FormLogin::class,'Status'])->name('status');
+    Route::get('/register',[FormLogin::class,'register'])->name('register');
+    Route::post('/register',[FormLogin::class,'Check_register']);
+
+});

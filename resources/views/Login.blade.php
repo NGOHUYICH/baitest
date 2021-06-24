@@ -24,7 +24,8 @@
                                 <label for="">Password</label>
                                 <input type="password" name="password" id="" class="form-control" placeholder="Password" aria-describedby="helpId">
                             </div>
-                            <button type="submit" class="btn btn-danger">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{{route('register')}}">Register</a>
                         </form>
                     </div>
                 
