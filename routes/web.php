@@ -51,4 +51,4 @@ Route::match(['get','post'],"Dangnhap",[FormDangNhap::class,'HienthiFormLogin'])
 Route::get('/Login',[FormLogin::class,'Login']);
 Route::post('/Login',[FormLogin::class,'Status'])->name('status');
 
-Route::get('/hienthiuser',[FormLogin::class,'hienthi']);
+Route::get('/hienthiuser',[FormLogin::class,'GuiMail']);
