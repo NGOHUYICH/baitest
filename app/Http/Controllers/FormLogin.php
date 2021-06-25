@@ -33,7 +33,8 @@ class FormLogin extends Controller
          //dd($result);
          $status = $request->filled('user');
          if($result==true){
-            return redirect()->route('hienthi',["status"=>$status]);
+            //echo 'ich';
+            return redirect()->route('hienthi',['status'=>$status]);
          }else{
             return back();
          }

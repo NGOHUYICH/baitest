@@ -10,14 +10,29 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-  <h1>Hay hoan thanh trang thai Dang nhap nhe</h1>
+  <h1 class="ml-5">Hay hoan thanh trang thai Dang nhap nhe</h1>
+  <div class="row mb-5 ml-5">
+    <div class="col-2">
+        <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ngôn ngữ...
+        </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="/Dangnhap/lang=vn">Việt Nam</a>
+        <a class="dropdown-item" href="/Dangnhap/lang=en">English</a>
+        <a class="dropdown-item" href="/Dangnhap/lang=fr">France</a>
+      </div>
+    </div>
+       
+    </div>
+  </div>
     <div class="container">
         <div class="row">
             <div class="col-4">
                 <form action="/Dangnhap" method="post">
                     @csrf 
                     <div class="form-group">
-                      <label for="">{{__('vietsub.name')}}</label>
+                      <label for="">{{__('name')}}</label>
                       <input type="text"
                         class="form-control" name="name" id="" aria-describedby="helpId" placeholder="Name">
                       
@@ -29,24 +44,24 @@
                      {{$message}}
                    </p>
                     @enderror
-                      <label for="">{{__('vietsub.address')}}</label>
+                      <label for="">{{__('address')}}</label>
                       <input type="text"
                         class="form-control" name="address" id="" aria-describedby="helpId" placeholder="Address">
                         
                     </div>
                     <div class="form-group">
-                      <label for="">{{__('vietsub.email')}}</label>
+                      <label for="">{{__('email')}}</label>
                       <input type="text"
                         class="form-control" name="email" id="" aria-describedby="helpId" placeholder="Email">
                         
                     </div>
                     <div class="form-group">
-                      <label for="">{{__('vietsub.content')}}</label>
+                      <label for="">{{__('content')}}</label>
                       <input type="text"
                         class="form-control" name="content" id="" aria-describedby="helpId" placeholder="Content">
                         
                     </div>
-                    <button type="submit" class="btn btn-danger" name="send">Submit</button>
+                    <button type="submit" class="btn btn-danger" name="send">{{__('send')}}</button>
                 </form>
             </div>
         </div>

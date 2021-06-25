@@ -4,6 +4,8 @@ use App\Http\Controllers\FormDangNhap;
 use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormLogin;
+use App\Http\Controllers\workController;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +62,10 @@ Route::prefix('Login')->group(function(){
     Route::post('/register',[FormLogin::class,'Check_register']);
 
 });
+
+Route::get('/Dangnhap/lang={lang}',function($lang){
+    App::setLocale($lang);
+    return view('Input_Login');
+});
+
+Route::get('/LamviecvoiCollection',[workController::class,'BasicController']);
