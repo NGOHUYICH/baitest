@@ -139,5 +139,11 @@ Route::prefix('AdidasNgoIch')->group(function(){
     Route::post('/',[NgohuyIch::class, 'Login'])->name('AdidasHome');
     Route::get('SignUp',[NgohuyIch::class,'Signup'])->name('AdidasSignup');
     Route::post('SignUp',[NgohuyIch::class,'Check_Signup'])->name('AdidasCheckSigup');
+    Route::post('/User/Add',[NgohuyIch::class,'Add_AccountUser'])
+        ->name('AdidasAddAccountUser');
+    Route::get('/Edit_Account={Edit_Account}',[NgohuyIch::class,'Edit_AccountUser'])
+        ->name('AdidasEditAccountUser');
+    Route::get('/Edit_Account',[NgohuyIch::class,'Edit_AccountUser'])
+        ->name('AdidasEditAccountUser1');
     
 });
