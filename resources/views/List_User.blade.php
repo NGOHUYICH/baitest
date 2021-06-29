@@ -1,4 +1,3 @@
-.
 <!doctype html>
 <html lang="en">
 
@@ -26,22 +25,26 @@
         <div id="myTabContent" class="tab-content">
             <div id="adduser" role="tabpanel" aria-labelledby="user-tab" class="tab-pane fade px-4 py-5">
                 <div class="row">
+                    @if(empty($First_Name_Edit_Account))
                     <form action="{{route('AdidasAddAccountUser')}}" method="post">
-                        @csrf
-                        <div class="input-group mb-3 ml-2">
-                            <label for="first_name" class="mt-2">First Name: </label>
-                            <input type="text" name="first_name" @if(!empty($First_Name_Edit_Account)) value={{$First_Name_Edit_Account}} @endif class="form-control col-2 ml-1" placeholder="User name" aria-label="Username" aria-describedby="basic-addon1">
-                            <label for="last_name" class="mt-2 ml-1">Last Name: </label>
-                            <input type="text" name="last_name" @if(!empty($Last_Name_Edit_Account)) value={{$Last_Name_Edit_Account}} @endif class="form-control col-2 ml-1" placeholder="User name" aria-label="Username" aria-describedby="basic-addon1">
-                            <label for="email" class="ml-2 mt-2">Email: </label>
-                            <input type="text" name="email" @if(!empty($Email_Edit_Account)) value={{$Email_Edit_Account}} @endif class="form-control col-2 ml-1 mr-1" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
-                            <label for="password" class="ml-2 mt-2">Password: </label>
-                            <input type="password" name="password" class="form-control col-2 ml-1 mr-1" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
-                            <div class="form-group">
-                                <input type="submit" @if(!empty($Email_Edit_Account)) value ="Update" @else value="Add User" @endif class="btn btn-warning float-right login_btn">
+                        @else
+                        <form action="{{$request->url()}}/Perform" method="post">
+                            @endif
+                            @csrf
+                            <div class="input-group mb-3 ml-2">
+                                <label for="first_name" class="mt-2">First Name: </label>
+                                <input type="text" name="first_name" @if(!empty($First_Name_Edit_Account)) value="{{$First_Name_Edit_Account}}" @endif class="form-control col-2 ml-1" placeholder="User name" aria-label="Username" aria-describedby="basic-addon1">
+                                <label for="last_name" class="mt-2 ml-1">Last Name: </label>
+                                <input type="text" name="last_name" @if(!empty($Last_Name_Edit_Account)) value="{{$Last_Name_Edit_Account}}" @endif class="form-control col-2 ml-1" placeholder="User name" aria-label="Username" aria-describedby="basic-addon1">
+                                <label for="email" class="ml-2 mt-2">Email: </label>
+                                <input type="text" name="email" @if(!empty($Email_Edit_Account)) value={{$Email_Edit_Account}} @endif class="form-control col-2 ml-1 mr-1" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+                                <label for="password" class="ml-2 mt-2">Password: </label>
+                                <input type="password" name="password" class="form-control col-2 ml-1 mr-1" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+                                <div class="form-group">
+                                    <input type="submit" @if(!empty($Email_Edit_Account)) value="Update" @else value="Add User" @endif class="btn btn-warning float-right login_btn">
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
                 </div>
                 <table class="table table-striped">
                     <thead>
@@ -59,11 +62,15 @@
                             <td>{{$listUser->name}}</td>
                             <td>{{$listUser->email}}</td>
                             <td>
-                                <form action="" method="get">
-                                    <a href="{{route('AdidasEditAccountUser1')}}={{$listUser->id}}">Edit</a>
-                                    <a href="#">Delete</a>
+                                <form action="Home" method="get">
+                                    @if(!empty($status))
+                                    <a href="Edit_Account={{$listUser->id}}">Edit</a>
+                                    <a href="Delete_Account={{$listUser->id}}">Delete</a>
+                                    @else
+                                    <a href="{{$request->url()}}/Edit_Account={{$listUser->id}}">Edit</a>
+                                    <a href="{{$request->url()}}/Delete_Account={{$listUser->id}}">Delete</a>
+                                    @endif
                                 </form>
-
                             </td>
                         </tr>
                         @endforeach

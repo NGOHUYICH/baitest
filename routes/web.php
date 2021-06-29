@@ -134,16 +134,18 @@ Route::get(
     // dd($hienthi);
 );
 
-Route::prefix('AdidasNgoIch')->group(function(){
-    Route::get('/',[NgohuyIch::class, 'indexAdidas']);
-    Route::post('/',[NgohuyIch::class, 'Login'])->name('AdidasHome');
-    Route::get('SignUp',[NgohuyIch::class,'Signup'])->name('AdidasSignup');
-    Route::post('SignUp',[NgohuyIch::class,'Check_Signup'])->name('AdidasCheckSigup');
-    Route::post('/User/Add',[NgohuyIch::class,'Add_AccountUser'])
+Route::prefix('AdidasNgoIch')->group(function () {
+    Route::get('/', [NgohuyIch::class, 'indexAdidas']);
+    Route::post('/', [NgohuyIch::class, 'Login'])->name('AdidasHome');
+    Route::get('/Home', [NgohuyIch::class, 'HomeAdidas'])->name('Home');
+    Route::get('SignUp', [NgohuyIch::class, 'Signup'])->name('AdidasSignup');
+    Route::post('SignUp', [NgohuyIch::class, 'Check_Signup'])->name('AdidasCheckSigup');
+    Route::post('/Home/User/Add', [NgohuyIch::class, 'Add_AccountUser'])
         ->name('AdidasAddAccountUser');
-    Route::get('/Edit_Account={Edit_Account}',[NgohuyIch::class,'Edit_AccountUser'])
-        ->name('AdidasEditAccountUser');
-    Route::get('/Edit_Account',[NgohuyIch::class,'Edit_AccountUser'])
-        ->name('AdidasEditAccountUser1');
+    Route::get('/Home/Edit_Account={Edit_Account}', [NgohuyIch::class, 'Edit_AccountUser'])
+        ->name('AdidasEditAccountUser'); 
+    Route::post('Home/Edit_Account={Edit_Account}/Perform', [NgohuyIch::class, 'Perform_Edit_AccountUser'])
+        ->name('AdidasPerformEditAccountUser');
+    Route::get('/Home/Delete_Account={Delete_Account}',[NgohuyIch::class,'Delete_AccountUser']);
     
 });

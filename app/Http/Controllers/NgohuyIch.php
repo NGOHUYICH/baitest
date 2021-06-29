@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\check_form_login;
+use App\Models\contacts;
 use Illuminate\Http\Request;
 use App\Models\User;
 use GrahamCampbell\ResultType\Result;
@@ -23,13 +24,20 @@ class NgohuyIch extends Controller
             // $listUser = User::all()->chunk(3)->toArray();
             // $listUser = User::all()->pluck('name')->toArray();
             // dd($listUser);
-            $listUser = User::all();
-            return view('List_User', ['listUser' => $listUser]);
+            // $listUser = User::all();
+            //dd(User::get());
+            return redirect()->route('Home');
+            // return view('List_User', ['listUser' => $listUser]);
         } else {
             return redirect()->back();
         }
-        //return 'xin chao moi nguoi den voi login';
-
+        //return 'xin chao moi nguoi den voi login';        
+    }
+    public function HomeAdidas(Request $request)
+    {
+        $listUser = User::all();
+        return view('List_User', ['listUser' => $listUser, 'request' => $request]);
+        // dd($listUser);
     }
     public function Signup()
     {
@@ -51,7 +59,15 @@ class NgohuyIch extends Controller
         // $data->email = $check_form_login->email;
         // $data->password = Hash::make($check_form_login->password);
         if ($data->save()) {
-            return "<script> alert('Cập nhật thành công')</script>";
+            $Phone = $check_form_login->phone;
+            $CheckID = User::all()->last();
+            $CheckID = $CheckID->id;
+            $dataContact = new contacts();
+            $dataContact->Phone = $Phone;
+            $dataContact->User_id = $CheckID;
+            $dataContact->save();
+           // echo "<script> alert('Cập nhật thành công')</script>";
+            return redirect()->route('Home');
         } else {
             return "<script> alert('Chưa thêm được dữ liệu')</script>";
         }
@@ -60,13 +76,14 @@ class NgohuyIch extends Controller
     }
     public function Add_AccountUser(Request $request)
     {
-        dd($request);
-        // $data = $this->Check_Add_User($request);
-        // if ($data->save()) {
-        //     return "<script> alert('Cập nhật thành công')</script>";
-        // } else {
-        //     return "<script> alert('Chưa thêm được dữ liệu')</script>";
-        // }
+        //dd($request);
+        $data = $this->Check_Add_User($request);
+        if ($data->save()) {
+            //echo "<script> alert('Thêm mới thành công')</script>";
+            return redirect()->route('Home');
+        } else {
+            return "<script> alert('Chưa thêm được dữ liệu')</script>";
+        }
     }
     public function Edit_AccountUser(Request $request)
     {
@@ -74,18 +91,47 @@ class NgohuyIch extends Controller
         $Name = trim($data->name);
         $First_Name_Edit_Account = Str::before($Name, ' ');
         $Last_Name_Edit_Account = Str::after($Name, ' ');
-        $Last_Name_Edit_Account = Str::replace(' ','_',$Last_Name_Edit_Account);
+        // $Last_Name_Edit_Account = Str::replace(' ','_',$Last_Name_Edit_Account);
         //dd($Last_Name_Edit_Account);
         $Email_Edit_Account = $data->email;
         $listUser = User::all();
+        $status = 1;
+        // $listUser = $listUser->toArray();
+        // dd($listUser[0]['id']);
         return view(
             'List_User',
             [
+                'status' => $status,
+                'request' => $request,
                 'listUser' => $listUser,
                 'First_Name_Edit_Account' => $First_Name_Edit_Account,
-                'Last_Name_Edit_Account' =>$Last_Name_Edit_Account,
-                'Email_Edit_Account' =>$Email_Edit_Account
+                'Last_Name_Edit_Account' => $Last_Name_Edit_Account,
+                'Email_Edit_Account' => $Email_Edit_Account
             ]
         );
+    }
+    public function Perform_Edit_AccountUser(Request $request)
+    {
+        $data = User::where('id', '=', $request->Edit_Account)
+            ->Update([
+                'name' => $request->last_name . ' ' . $request->first_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+        if ($data) {
+            //echo "<script> alert('Cập nhật thành công')</script>";
+            return redirect()->route('Home');
+        } else
+            return "<script> alert('Thất bại cập nhật')</script>";
+    }
+    public function Delete_AccountUser($Delete_Account)
+    {
+        $data = User::where('id', '=', $Delete_Account)
+            ->delete();
+        if ($data) {
+            //echo "<script> alert('Xóa thành công')</script>";
+            return redirect()->route('Home');
+        } else
+            return "<script> alert('Thất bại Xóa')</script>";
     }
 }
