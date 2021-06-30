@@ -1,8 +1,14 @@
 {
     
-    "name" : "Họ và tên",
-    "address" : "Địa chỉ",
-    "email" :"Email",
-    "content"  : "Nội dung",
-    "send" : "Gửi"
+        "List User" :"Danh sách Người dùng",
+        "List Contact" :"Danh sách Danh bạ",
+        "First Name" : "Tên",
+        "Last Name" : "Họ Đệm",
+        "Phone" :"SĐT",
+        "Password"  : "Mật Khẩu",
+        "Update" : "Cập nhật",
+        "Add User" : "Tạo tài khoản",
+        "Edit" : "Sửa",
+        "Delete" :"Xóa"
+    
 }

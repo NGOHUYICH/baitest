@@ -42,7 +42,7 @@
                             <input type="checkbox">Remember Me
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn btn-primary float-right login_btn">
+                            <input type="submit" name ="login" value="Login" class="btn btn-primary float-right login_btn">
                         </div>
                     </form>
                 </div>

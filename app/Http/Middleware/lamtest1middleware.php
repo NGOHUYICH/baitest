@@ -16,7 +16,7 @@ class lamtest1middleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->loidi=="ngohuyich"){
+        if(!isset($request->id)){
             echo 'Di dung duong';
             return $next($request);
         }else
