@@ -36,7 +36,17 @@ class NgohuyIch extends Controller
     public function HomeAdidas(Request $request)
     {
         $listUser = User::all();
-        return view('List_User', ['listUser' => $listUser, 'request' => $request]);
+        // $listContact = User::find('name','');
+        // $listContact = User::with('contacts','contacts.name')->get('contacts.name');
+        // $listContact = User::first()->contacts;
+        $listContact =  User::with('contacts')->get();
+    //    dd($listContact[0]['contacts'][0]['phone']);
+        //$listName = pluck($listContact);
+       // echo $listContact[0]['name']
+       // dd($listContact[0]['contacts']);
+       // echo '<pre>';
+       // print_r($listContact);die;
+        return view('List_User', ['listUser' => $listUser, 'request' => $request,'listContact'=>$listContact]);
         // dd($listUser);
     }
     public function Signup()
@@ -54,7 +64,7 @@ class NgohuyIch extends Controller
     public function Check_Signup(check_form_login $check_form_login)
     {
         $data = $this->Check_Add_User($check_form_login);
-        // $data = new User();
+        // $data = new Uer();s
         // $data->name = $check_form_login->last_name.' '.$check_form_login->first_name;
         // $data->email = $check_form_login->email;
         // $data->password = Hash::make($check_form_login->password);

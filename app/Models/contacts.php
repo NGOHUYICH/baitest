@@ -9,5 +9,9 @@ class contacts extends Model
 {
     use HasFactory;
     protected $table ="contacts";
+    public function users()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
     
 }
