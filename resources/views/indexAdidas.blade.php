@@ -51,7 +51,7 @@
                         Don't have an account?<a href="{{route('AdidasSignup')}}">Sign Up</a>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="#">Forgot your password?</a>
+                        <a href="AdidasNgoIch/ForgotPass">Forgot your password?</a>
                     </div>
                 </div>
             </div>

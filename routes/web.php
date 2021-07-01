@@ -140,6 +140,9 @@ Route::prefix('AdidasNgoIch')->group(function () {
     Route::get('/Home', [NgohuyIch::class, 'HomeAdidas'])->name('Home')->middleware('Check_Admin');
     Route::get('SignUp', [NgohuyIch::class, 'Signup'])->name('AdidasSignup');
     Route::post('SignUp', [NgohuyIch::class, 'Check_Signup'])->name('AdidasCheckSigup');
+    Route::get("ForgotPass",[NgohuyIch::class,'Forgot_Pass']);
+    Route::post("ForgotPass",[NgohuyIch::class,'Check_Forgot_Pass'])->name('Check_Email_ForgotPass');
+    Route::post("FreshPass",[NgohuyIch::class,'Fresh_Pass'])->name('Fresh_Pass');
     Route::post('/Home/User/Add', [NgohuyIch::class, 'Add_AccountUser'])
         ->name('AdidasAddAccountUser');
     Route::get('/Home/Edit_Account={Edit_Account}', [NgohuyIch::class, 'Edit_AccountUser'])

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="row mb-5 ml-5 mt-3">
+    <div class="row mb-5 ml-5 mt-3 mx-0">
         <div class="col-2">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -23,8 +23,11 @@
                     <a class="dropdown-item" href="http://baitest.test/AdidasNgoIch/Home/lang=en">English</a>
                 </div>
             </div>
-
         </div>
+        <div class="mt-2">
+            <a href="http://baitest.test/AdidasNgoIch/Home">{{__('Home')}}</a>
+        </div>
+
     </div>
     <div class="p-5 bg-white rounded shadow mb-5">
         <!-- Rounded tabs -->

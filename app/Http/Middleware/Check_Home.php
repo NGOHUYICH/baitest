@@ -17,21 +17,12 @@ class Check_Home
      */
     public function handle(Request $request, Closure $next)
     {
-        // return redirect('http://baitest.test/AdidasNgoIch');
-        //echo Auth::guest();
-        // dd(($request));
-        $user = Auth::id();
+       // $a = Auth::guest();
         
-        dd($user);
-        // if(empty($user->id)){
-        //     echo 'thao bao';
-        //     return redirect()->intended('AdidasNgoIch/');
-        // }else{
-        //     echo 'loi dc';
-        //     // 
-        // }
-
-       // return $next($request);
-        
+        if(isset($_SERVER['HTTP_REFERER'])){
+            return $next($request);
+        }else{
+            return redirect()->intended('/AdidasNgoIch');
+        }
     }
 }

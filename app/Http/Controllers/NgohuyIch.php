@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Check_Email_Contact;
 use App\Http\Requests\check_form_login;
+use App\Mail\SendMail;
 use App\Models\contacts;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -10,18 +12,21 @@ use GrahamCampbell\ResultType\Result;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class NgohuyIch extends Controller
 {
-    public function indexAdidas()
+    public function indexAdidas(Request $request)
     {
+        // $request->session()->flush();
         return view('indexAdidas');
     }
     public function Login(Request $request)
     {
         $CheckLogin = Auth::attempt(['name' => $request->username, 'password' => $request->password]);
-        if ($CheckLogin) {
+        if ($CheckLogin and isset($_POST['login'])) {
             // $listUser = User::all()->chunk(3)->toArray();
             // $listUser = User::all()->pluck('name')->toArray();
             // dd($listUser);
@@ -44,7 +49,7 @@ class NgohuyIch extends Controller
     public function Check_Add_User($request)
     {
         $data = new User();
-        $data->name = $request->first_name. ' ' . $request->last_name;
+        $data->name = $request->first_name . ' ' . $request->last_name;
         $data->email = $request->email;
         $data->password = Hash::make($request->password);
         return $data;
@@ -86,7 +91,7 @@ class NgohuyIch extends Controller
     public function Edit_AccountUser(Request $request)
     {
         $data = User::find($request->Edit_Account);
-        $dataContact = contacts::where('user_id','=',$request->Edit_Account)->get()->toArray();
+        $dataContact = contacts::where('user_id', '=', $request->Edit_Account)->get()->toArray();
         $Name = trim($data->name);
         $First_Name_Edit_Account = Str::before($Name, ' ');
         $Last_Name_Edit_Account = Str::after($Name, ' ');
@@ -102,7 +107,7 @@ class NgohuyIch extends Controller
         return view(
             'List_User',
             [
-                'listContact' =>$listContact,
+                'listContact' => $listContact,
                 'status' => $status,
                 'request' => $request,
                 'listUser' => $listUser,
@@ -117,12 +122,12 @@ class NgohuyIch extends Controller
     {
         $data = User::where('id', '=', $request->Edit_Account)
             ->Update([
-                'name' => $request->first_name.' '.$request->last_name,
+                'name' => $request->first_name . ' ' . $request->last_name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
-        $dataContact = contacts::where('user_id','=',$request->Edit_Account)
-            ->Update(['phone'=>$request->phone]);
+        $dataContact = contacts::where('user_id', '=', $request->Edit_Account)
+            ->Update(['phone' => $request->phone]);
         if ($data) {
             return redirect()->route('Home');
         } else
@@ -137,12 +142,62 @@ class NgohuyIch extends Controller
         } else
             return "<script> alert('Thất bại Xóa')</script>";
     }
-    public function languages($lang,Request $request)
+    public function languages($lang, Request $request)
     {
         App::setLocale($lang);
-         $listUser = User::all();
-         $listContact =  User::with('contacts')->get();
-         return view('List_User', ['listUser' => $listUser, 'request' => $request, 'listContact' => $listContact]);
-       // return redirect()->route('Home');
+        $listUser = User::all();
+        $listContact =  User::with('contacts')->get();
+        return view('List_User', ['listUser' => $listUser, 'request' => $request, 'listContact' => $listContact]);
+        // return redirect()->route('Home');
+    }
+    public function Forgot_Pass()
+    {
+        return view('Forgot_Password');
+    }
+    public function Get_Forgot_Pass()
+    {
+        return view('Fresh_Password');
+    }
+    public function Check_Forgot_Pass(Check_Email_Contact $check_Email_Contact)
+    {
+        $CodeQR = rand(1000, 10000);
+        $gmail = $check_Email_Contact->email;
+        $send = [
+            'title' => "Có phải bạn quên mật khẩu",
+            'body' => "Mã kích hoạt: " . $CodeQR
+        ];
+        $check_email = User::where('email', '=', $gmail)->get();
+        if ($check_email->isNotEmpty()) {
+            Mail::to($gmail)->send(new SendMail($send));
+            return view('Fresh_Password', ['CodeQR' => $CodeQR, 'email' => $gmail]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function Fresh_Pass(Request $request)
+    {
+        //     $ContentValidate = [
+        //         'password.required' =>'Trường này không được để trống',
+        //         'password.min' =>'Chuỗi kí tự quá ngắn',
+        //         'confirm_password.required' =>'Trường này không được để trống',
+        //         'confirm_password.same' =>'Mật khẩu không khớp'
+        //     ];
+
+        //     $checkValidate = $request->validate([
+        //         'password' => 'bail|required|min:8',
+        //         'confirm_password' => 'bail|required|same:password'
+        //     ],$ContentValidate);
+
+        //     // return $checkValidate;
+        //    dd($checkValidate);
+        $password = $request->password;
+        $confirm_password = $request->confirm_password;
+        if (strcmp($password, $confirm_password) == 0) {
+            $update = User::where('email', '=', $request->email)
+                ->update(['password' => Hash::make($password)]);
+        } else {
+            return redirect()->back();
+        }
     }
 }
