@@ -31,9 +31,9 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 // Route::get('/login/{id}', function ($id) {
 //     return 'Ban can dang nhap '.$id;
 // })->name('use');
@@ -133,26 +133,30 @@ Route::get(
     // $hienthi = customers::No_Purchase();
     // dd($hienthi);
 );
-
-Route::prefix('AdidasNgoIch')->group(function () {
-    Route::get('/', [NgohuyIch::class, 'indexAdidas']);
-    Route::post('/', [NgohuyIch::class, 'Login'])->name('AdidasHome');
-    Route::get('/Home', [NgohuyIch::class, 'HomeAdidas'])->name('Home')->middleware('Check_Admin');
+//Check_Admin
+Route::get('/login', [NgohuyIch::class, 'indexAdidas'])->name('login');
+Route::post('/login', [NgohuyIch::class, 'Login'])->name('AdidasHome');
+Route::get('/logout',[NgohuyIch::class,'logout'])->name('logout');
+Route::group(['prefix' =>'AdidasNgoIch'],function(){
+    Route::get('/Home', [NgohuyIch::class, 'HomeAdidas'])->name('Home')->middleware('auth');
     Route::get('SignUp', [NgohuyIch::class, 'Signup'])->name('AdidasSignup');
     Route::post('SignUp', [NgohuyIch::class, 'Check_Signup'])->name('AdidasCheckSigup');
-    Route::get("ForgotPass",[NgohuyIch::class,'Forgot_Pass']);
-    Route::post("ForgotPass",[NgohuyIch::class,'Check_Forgot_Pass'])->name('Check_Email_ForgotPass');
-    Route::post("FreshPass",[NgohuyIch::class,'Fresh_Pass'])->name('Fresh_Pass');
+    Route::get("ForgotPass", [NgohuyIch::class, 'Forgot_Pass']);
+    Route::post("ForgotPass", [NgohuyIch::class, 'Check_Forgot_Pass'])->name('Check_Email_ForgotPass');
+    Route::post("FreshPass", [NgohuyIch::class, 'Fresh_Pass'])->name('Fresh_Pass');
     Route::post('/Home/User/Add', [NgohuyIch::class, 'Add_AccountUser'])
         ->name('AdidasAddAccountUser');
     Route::get('/Home/Edit_Account={Edit_Account}', [NgohuyIch::class, 'Edit_AccountUser'])
-        ->name('AdidasEditAccountUser'); 
+        ->name('AdidasEditAccountUser');
     Route::post('Home/Edit_Account={Edit_Account}/Perform', [NgohuyIch::class, 'Perform_Edit_AccountUser'])
         ->name('AdidasPerformEditAccountUser');
-    Route::get('/Home/Delete_Account={Delete_Account}',[NgohuyIch::class,'Delete_AccountUser']);
-    Route::get('Home/lang={lang}',[NgohuyIch::class,'languages'])->name('languages');
-    
+    Route::get('/Home/Delete_Account={Delete_Account}', [NgohuyIch::class, 'Delete_AccountUser']);
+    Route::get('Home/lang={lang}', [NgohuyIch::class, 'languages'])->name('languages');
 });
-// Route::get('haha',function(){
-//     echo 'haha' ;
-// });
+
+// Route::get('login', function () {
+//     return view('haha');
+// })->name('login');
+// Route::get('/haha', function () {
+//     return "echo";
+// })->middleware('auth');

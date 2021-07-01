@@ -21,7 +21,12 @@ class NgohuyIch extends Controller
     public function indexAdidas(Request $request)
     {
         // $request->session()->flush();
-        return view('indexAdidas');
+        // dd(Auth::check());
+        if(Auth::check()){
+            return redirect()->back();
+        }else{
+            return view('indexAdidas');
+        }
     }
     public function Login(Request $request)
     {
@@ -158,6 +163,7 @@ class NgohuyIch extends Controller
     {
         return view('Fresh_Password');
     }
+    
     public function Check_Forgot_Pass(Check_Email_Contact $check_Email_Contact)
     {
         $CodeQR = rand(1000, 10000);
@@ -196,8 +202,14 @@ class NgohuyIch extends Controller
         if (strcmp($password, $confirm_password) == 0) {
             $update = User::where('email', '=', $request->email)
                 ->update(['password' => Hash::make($password)]);
+            return redirect()->route('Home');
         } else {
             return redirect()->back();
         }
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
     }
 }

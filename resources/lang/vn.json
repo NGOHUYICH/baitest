@@ -10,6 +10,7 @@
         "Add User" : "Tạo tài khoản",
         "Edit" : "Sửa",
         "Delete" :"Xóa",
-        "Home" :"Trang chủ"
+        "Home" :"Trang chủ",
+        "LogOut" :"Đăng xuất"
     
 }

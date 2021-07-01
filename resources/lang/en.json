@@ -9,5 +9,6 @@
     "Add User" : "Add User",
     "Edit" : "Edit",
     "Delete" :"Delete",
-    "Home" :"Home"
+    "Home" :"Home",
+    "LogOut" :"LogOut"
 }

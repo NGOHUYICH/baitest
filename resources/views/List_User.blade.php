@@ -26,6 +26,7 @@
         </div>
         <div class="mt-2">
             <a href="http://baitest.test/AdidasNgoIch/Home">{{__('Home')}}</a>
+            <a href="{{route('logout')}}" class="ml-2">{{__('LogOut')}}</a>
         </div>
 
     </div>
